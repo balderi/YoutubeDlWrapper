@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("YoutubeDlWrapper")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("YouTube Download")]
+[assembly: AssemblyDescription("A GUI wrapper for youtube-dl")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("YoutubeDlWrapper")]
+[assembly: AssemblyCompany("Redlab Solutions")]
+[assembly: AssemblyProduct("YouTube Download")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Redlab Solutions")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

@@ -9,34 +9,34 @@ namespace YoutubeDlWrapper
 {
     public partial class MainWindow : Form
     {
-        static string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\From YouTube";
-        string videoArgs = "--add-metadata -c -o \"" + folderPath + "\\%(title)s.%(ext)s\" --merge-output-format mkv";
-        string audioArgs = "--add-metadata -c -o %(title)s.%(ext)s -x --audio-format";
+        static string _folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\From YouTube";
+        string _videoArgs = "--add-metadata -c -o \"" + _folderPath + "\\%(title)s.%(ext)s\" --merge-output-format mkv";
+        string _audioArgs = "--add-metadata -c -o %(title)s.%(ext)s -x --audio-format";
 
-        public Dictionary<string, string> audioFormats;
-        SuccessMessageBox success;
+        Dictionary<string, string> _audioFormats;
+        SuccessMessageBox _success;
 
         public MainWindow()
         {
             InitializeComponent();
-            success = new SuccessMessageBox(folderPath);
+            _success = new SuccessMessageBox(_folderPath);
             tbOutput.Text = "Checking for updates...";
             lblFormat.Visible = false;
             cbFormat.Visible = false;
             pBar.Visible = false;
 
-            if(!Directory.Exists(folderPath))
+            if(!Directory.Exists(_folderPath))
             {
-                Directory.CreateDirectory(folderPath);
+                Directory.CreateDirectory(_folderPath);
             }
 
-            audioFormats = new Dictionary<string, string>();
-            audioFormats.Add("AAC", "aac");
-            audioFormats.Add("MP3", "mp3");
-            audioFormats.Add("Ogg Vorbis", "vorbis");
-            audioFormats.Add("Wave", "wav");
+            _audioFormats = new Dictionary<string, string>();
+            _audioFormats.Add("AAC", "aac");
+            _audioFormats.Add("MP3", "mp3");
+            _audioFormats.Add("Ogg Vorbis", "vorbis");
+            _audioFormats.Add("Wave", "wav");
 
-            foreach(KeyValuePair<string, string> format in audioFormats)
+            foreach(KeyValuePair<string, string> format in _audioFormats)
             {
                 cbFormat.Items.Add(format.Key);
             }
@@ -88,14 +88,14 @@ namespace YoutubeDlWrapper
                 return;
             }
             string format = "";
-            if (cbAudio.Checked) audioFormats.TryGetValue(cbFormat.SelectedItem.ToString(), out format);
+            if (cbAudio.Checked) _audioFormats.TryGetValue(cbFormat.SelectedItem.ToString(), out format);
 
             tbOutput.Text = string.Empty;
             DisableControls();
             btnStart.Text = "Wait...";
             Process process = new Process();
             process.StartInfo.FileName = "youtube-dl.exe";
-            process.StartInfo.Arguments = cbAudio.Checked ? audioArgs + " " + format + " " + tbAddress.Text : videoArgs + " " + tbAddress.Text;
+            process.StartInfo.Arguments = cbAudio.Checked ? _audioArgs + " " + format + " " + tbAddress.Text : _videoArgs + " " + tbAddress.Text;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
@@ -113,15 +113,14 @@ namespace YoutubeDlWrapper
             {
                 if (process.ExitCode == 0)
                 {
-                    success.ShowDialog();
-                    //MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _success.ShowDialog();
                 }
             };
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.EnableRaisingEvents = true;
-            process.Exited += SomethingHandler;
+            process.Exited += ytdlExitHandler;
         }
 
         void ytdlOutputHandler(object sender, DataReceivedEventArgs e)
@@ -142,7 +141,7 @@ namespace YoutubeDlWrapper
             }));
         }
 
-        void SomethingHandler(object sender, EventArgs e)
+        void ytdlExitHandler(object sender, EventArgs e)
         {
             BeginInvoke(new MethodInvoker(() =>
             {
@@ -175,6 +174,12 @@ namespace YoutubeDlWrapper
             cbFormat.Enabled = true;
             tbAddress.Enabled = true;
             pBar.Visible = false;
+        }
+
+        private void pbLogo_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+            about.ShowDialog(this);
         }
     }
 }

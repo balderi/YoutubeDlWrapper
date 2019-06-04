@@ -37,10 +37,10 @@
             this.cbAudio = new System.Windows.Forms.CheckBox();
             this.lblFormat = new System.Windows.Forms.Label();
             this.cbFormat = new System.Windows.Forms.ComboBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // tbOutput
@@ -131,18 +131,20 @@
             this.cbFormat.Size = new System.Drawing.Size(264, 21);
             this.cbFormat.TabIndex = 3;
             // 
-            // pictureBox1
+            // pbLogo
             // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.ErrorImage = null;
-            this.pictureBox1.Image = global::YoutubeDlWrapper.Properties.Resources.logo;
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 9);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(112, 54);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 103;
-            this.pictureBox1.TabStop = false;
+            this.pbLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbLogo.ErrorImage = null;
+            this.pbLogo.Image = global::YoutubeDlWrapper.Properties.Resources.logo;
+            this.pbLogo.InitialImage = null;
+            this.pbLogo.Location = new System.Drawing.Point(12, 9);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(112, 54);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLogo.TabIndex = 103;
+            this.pbLogo.TabStop = false;
+            this.pbLogo.Click += new System.EventHandler(this.pbLogo_Click);
             // 
             // label2
             // 
@@ -157,7 +159,7 @@
             this.label2.Text = "YouTube Download";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // Form1
+            // MainWindow
             // 
             this.AcceptButton = this.btnStart;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,17 +167,18 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(529, 204);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainWindow";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YouTube Download";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,7 +190,7 @@
         private System.Windows.Forms.TextBox tbAddress;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.CheckBox cbAudio;
         private System.Windows.Forms.Label lblFormat;
         private System.Windows.Forms.ComboBox cbFormat;
