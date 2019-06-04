@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -15,11 +17,14 @@ namespace YoutubeDlWrapper
 
         Dictionary<string, string> _audioFormats;
         SuccessMessageBox _success;
+        WebClient webClient;
 
         public MainWindow()
         {
             InitializeComponent();
             _success = new SuccessMessageBox(_folderPath);
+            webClient = new WebClient();
+
             tbOutput.Text = "Checking for updates...";
             lblFormat.Visible = false;
             cbFormat.Visible = false;
@@ -197,6 +202,24 @@ namespace YoutubeDlWrapper
         private void btnFolder_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", _folderPath);
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                Stream versionStream = webClient.OpenRead("http://www.runedal.dk/ytdl-version.txt");
+                StreamReader versionReader = new StreamReader(versionStream);
+                string version = versionReader.ReadToEnd();
+                if (Assembly.GetExecutingAssembly().GetName().Version < Version.Parse(version))
+                {
+                    if (MessageBox.Show("There is a new version available!\nWould you like to download it now?", "YouTube Download - Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        Process.Start("https://github.com/balderi/YoutubeDlWrapper/releases");
+                    }
+                }
+            }
+            catch (Exception ex) { }
         }
     }
 }

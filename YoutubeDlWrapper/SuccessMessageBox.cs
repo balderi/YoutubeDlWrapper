@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Media;
 
 namespace YoutubeDlWrapper
 {
@@ -25,6 +26,12 @@ namespace YoutubeDlWrapper
         {
             Process.Start("explorer.exe", _folderPath);
             Close();
+        }
+
+        private void SuccessMessageBox_Load(object sender, EventArgs e)
+        {
+            SoundPlayer sp = new SoundPlayer("Resources\\done.wav");
+            sp.Play();
         }
     }
 }
