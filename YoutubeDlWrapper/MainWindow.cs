@@ -147,6 +147,7 @@ namespace YoutubeDlWrapper
             }));
         }
 
+        // When the youtube-ld process exits
         void ytdlExitHandler(object sender, EventArgs e)
         {
             BeginInvoke(new MethodInvoker(() =>
@@ -188,6 +189,7 @@ namespace YoutubeDlWrapper
             about.ShowDialog(this);
         }
 
+        // Enable controls once youtube-dl updating has finished
         private void timer1_Tick(object sender, EventArgs e)
         {
             if(tbOutput.Text.ToLower().Contains("updated")
@@ -199,6 +201,7 @@ namespace YoutubeDlWrapper
             }
         }
 
+        // Open the Videos\From YouTube folder
         private void btnFolder_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", _folderPath);
