@@ -11,7 +11,7 @@ namespace YoutubeDlWrapper
     {
         static string _folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\From YouTube";
         string _videoArgs = "--add-metadata -c -o \"" + _folderPath + "\\%(title)s.%(ext)s\" --merge-output-format mkv";
-        string _audioArgs = "--add-metadata -c -o %(title)s.%(ext)s -x --audio-format";
+        string _audioArgs = "--add-metadata -c -o \"" + _folderPath + "\\%(title)s.%(ext)s\" -x --audio-format";
 
         Dictionary<string, string> _audioFormats;
         SuccessMessageBox _success;
@@ -51,6 +51,7 @@ namespace YoutubeDlWrapper
             process.OutputDataReceived += new DataReceivedEventHandler(ytdlOutputHandler);
             process.Start();
             process.BeginOutputReadLine();
+            DisableControls();
         }
 
         bool CheckForm(out string message)
@@ -148,7 +149,6 @@ namespace YoutubeDlWrapper
                 tbOutput.Text = "Ready.";
                 btnStart.Text = "Start";
                 EnableControls();
-                tbAddress.Focus();
             }));
         }
 
@@ -174,12 +174,29 @@ namespace YoutubeDlWrapper
             cbFormat.Enabled = true;
             tbAddress.Enabled = true;
             pBar.Visible = false;
+            tbAddress.Focus();
         }
 
         private void pbLogo_Click(object sender, EventArgs e)
         {
             AboutBox about = new AboutBox();
             about.ShowDialog(this);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if(tbOutput.Text.ToLower().Contains("updated")
+                || tbOutput.Text.ToLower().Contains("up-to-date")
+                || tbOutput.Text.ToLower().Contains("ready"))
+            {
+                EnableControls();
+                timer1.Stop();
+            }
+        }
+
+        private void btnFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", _folderPath);
         }
     }
 }

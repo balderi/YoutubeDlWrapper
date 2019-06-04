@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.tbOutput = new System.Windows.Forms.TextBox();
             this.tbAddress = new System.Windows.Forms.TextBox();
@@ -37,8 +38,10 @@
             this.cbAudio = new System.Windows.Forms.CheckBox();
             this.lblFormat = new System.Windows.Forms.Label();
             this.cbFormat = new System.Windows.Forms.ComboBox();
-            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnFolder = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.SuspendLayout();
@@ -60,12 +63,12 @@
             // 
             this.tbAddress.Location = new System.Drawing.Point(13, 73);
             this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(424, 20);
+            this.tbAddress.Size = new System.Drawing.Size(424, 22);
             this.tbAddress.TabIndex = 0;
             // 
             // btnStart
             // 
-            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStart.Location = new System.Drawing.Point(444, 72);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 49);
@@ -77,7 +80,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnFolder);
             this.panel1.Controls.Add(this.pBar);
             this.panel1.Controls.Add(this.cbAudio);
             this.panel1.Controls.Add(this.lblFormat);
@@ -94,10 +98,10 @@
             // pBar
             // 
             this.pBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pBar.Location = new System.Drawing.Point(0, 126);
+            this.pBar.Location = new System.Drawing.Point(0, 128);
             this.pBar.MarqueeAnimationSpeed = 20;
             this.pBar.Name = "pBar";
-            this.pBar.Size = new System.Drawing.Size(525, 5);
+            this.pBar.Size = new System.Drawing.Size(527, 5);
             this.pBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pBar.TabIndex = 104;
             // 
@@ -106,7 +110,7 @@
             this.cbAudio.AutoSize = true;
             this.cbAudio.Location = new System.Drawing.Point(13, 101);
             this.cbAudio.Name = "cbAudio";
-            this.cbAudio.Size = new System.Drawing.Size(76, 17);
+            this.cbAudio.Size = new System.Drawing.Size(83, 17);
             this.cbAudio.TabIndex = 2;
             this.cbAudio.Text = "Only audio";
             this.cbAudio.UseVisualStyleBackColor = true;
@@ -117,7 +121,7 @@
             this.lblFormat.AutoSize = true;
             this.lblFormat.Location = new System.Drawing.Point(95, 102);
             this.lblFormat.Name = "lblFormat";
-            this.lblFormat.Size = new System.Drawing.Size(72, 13);
+            this.lblFormat.Size = new System.Drawing.Size(77, 13);
             this.lblFormat.TabIndex = 103;
             this.lblFormat.Text = "Select format:";
             // 
@@ -128,23 +132,8 @@
             this.cbFormat.FormattingEnabled = true;
             this.cbFormat.Location = new System.Drawing.Point(173, 99);
             this.cbFormat.Name = "cbFormat";
-            this.cbFormat.Size = new System.Drawing.Size(264, 21);
+            this.cbFormat.Size = new System.Drawing.Size(145, 21);
             this.cbFormat.TabIndex = 3;
-            // 
-            // pbLogo
-            // 
-            this.pbLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbLogo.ErrorImage = null;
-            this.pbLogo.Image = global::YoutubeDlWrapper.Properties.Resources.logo;
-            this.pbLogo.InitialImage = null;
-            this.pbLogo.Location = new System.Drawing.Point(12, 9);
-            this.pbLogo.Name = "pbLogo";
-            this.pbLogo.Size = new System.Drawing.Size(112, 54);
-            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbLogo.TabIndex = 103;
-            this.pbLogo.TabStop = false;
-            this.pbLogo.Click += new System.EventHandler(this.pbLogo_Click);
             // 
             // label2
             // 
@@ -159,6 +148,36 @@
             this.label2.Text = "YouTube Download";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // pbLogo
+            // 
+            this.pbLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbLogo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbLogo.ErrorImage = null;
+            this.pbLogo.Image = global::YoutubeDlWrapper.Properties.Resources.logo;
+            this.pbLogo.InitialImage = null;
+            this.pbLogo.Location = new System.Drawing.Point(46, 9);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(78, 54);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLogo.TabIndex = 103;
+            this.pbLogo.TabStop = false;
+            this.pbLogo.Click += new System.EventHandler(this.pbLogo_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btnFolder
+            // 
+            this.btnFolder.Location = new System.Drawing.Point(324, 99);
+            this.btnFolder.Name = "btnFolder";
+            this.btnFolder.Size = new System.Drawing.Size(113, 21);
+            this.btnFolder.TabIndex = 105;
+            this.btnFolder.Text = "Open video folder...";
+            this.btnFolder.UseVisualStyleBackColor = true;
+            this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
+            // 
             // MainWindow
             // 
             this.AcceptButton = this.btnStart;
@@ -169,6 +188,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.panel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -196,6 +216,8 @@
         private System.Windows.Forms.ComboBox cbFormat;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar pBar;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnFolder;
     }
 }
 

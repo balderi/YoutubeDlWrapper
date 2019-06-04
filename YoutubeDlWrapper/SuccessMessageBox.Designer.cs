@@ -75,7 +75,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(65, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(371, 39);
+            this.label1.Size = new System.Drawing.Size(385, 39);
             this.label1.TabIndex = 0;
             this.label1.Text = "Download successful! \r\n\r\nFile saved to C:\\Users\\SuperLongUserNameWatWat\\Videos\\Fr" +
     "om YouTube";
@@ -98,6 +98,7 @@
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.panel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

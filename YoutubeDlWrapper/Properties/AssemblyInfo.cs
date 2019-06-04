@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("YouTube Download")]
-[assembly: AssemblyDescription("A GUI wrapper for youtube-dl")]
+[assembly: AssemblyDescription("A GUI wrapper for youtube-dl\n\nhttps://github.com/balderi/YoutubeDlWrapper")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Redlab Solutions")]
 [assembly: AssemblyProduct("YouTube Download")]
