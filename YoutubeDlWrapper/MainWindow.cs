@@ -211,7 +211,7 @@ namespace YoutubeDlWrapper
         {
             try
             {
-                Stream versionStream = webClient.OpenRead("http://www.runedal.dk/ytdl-version.txt");
+                Stream versionStream = webClient.OpenRead("https://raw.githubusercontent.com/balderi/YoutubeDlWrapper/master/YoutubeDlWrapper/version.txt");
                 StreamReader versionReader = new StreamReader(versionStream);
                 string version = versionReader.ReadToEnd();
                 if (Assembly.GetExecutingAssembly().GetName().Version < Version.Parse(version))
