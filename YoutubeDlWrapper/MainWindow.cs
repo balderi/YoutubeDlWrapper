@@ -1,25 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace YoutubeDlWrapper
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
-        string videoArgs = "--add-metadata -c -o %(title)s.%(ext)s --merge-output-format mkv";
+        static string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) + @"\From YouTube";
+        string videoArgs = "--add-metadata -c -o \"" + folderPath + "\\%(title)s.%(ext)s\" --merge-output-format mkv";
         string audioArgs = "--add-metadata -c -o %(title)s.%(ext)s -x --audio-format";
 
         public Dictionary<string, string> audioFormats;
-        
-        public Form1()
+        SuccessMessageBox success;
+
+        public MainWindow()
         {
             InitializeComponent();
+            success = new SuccessMessageBox(folderPath);
             tbOutput.Text = "Checking for updates...";
             lblFormat.Visible = false;
             cbFormat.Visible = false;
             pBar.Visible = false;
+
+            if(!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
 
             audioFormats = new Dictionary<string, string>();
             audioFormats.Add("AAC", "aac");
@@ -104,7 +113,8 @@ namespace YoutubeDlWrapper
             {
                 if (process.ExitCode == 0)
                 {
-                    MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    success.ShowDialog();
+                    //MessageBox.Show("Done!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             };
             process.Start();
