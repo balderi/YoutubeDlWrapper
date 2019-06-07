@@ -35,17 +35,22 @@ namespace YoutubeDlWrapper
                 Directory.CreateDirectory(_folderPath);
             }
 
-            _audioFormats = new Dictionary<string, string>();
-            _audioFormats.Add("AAC", "aac");
-            _audioFormats.Add("MP3", "mp3");
-            _audioFormats.Add("Ogg Vorbis", "vorbis");
-            _audioFormats.Add("Wave", "wav");
+            // {GUI name, youtube-dl name}
+            _audioFormats = new Dictionary<string, string>
+            {
+                { "AAC (.aac)", "aac" },
+                { "MP3 (.mp3)", "mp3" },
+                { "Ogg Vorbis (.ogg)", "vorbis" },
+                { "Wave (.wav)", "wav" }
+            };
 
-            foreach(KeyValuePair<string, string> format in _audioFormats)
+            // Build the drop down menu
+            foreach (KeyValuePair<string, string> format in _audioFormats)
             {
                 cbFormat.Items.Add(format.Key);
             }
 
+            // Check for youtube-dl updates
             Process process = new Process();
             process.StartInfo.FileName = "youtube-dl.exe";
             process.StartInfo.Arguments = "--update";
@@ -126,6 +131,7 @@ namespace YoutubeDlWrapper
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.EnableRaisingEvents = true;
+            // 2nd handler for Exited, to avoid cross-thread ops
             process.Exited += ytdlExitHandler;
         }
 
@@ -147,7 +153,7 @@ namespace YoutubeDlWrapper
             }));
         }
 
-        // When the youtube-ld process exits
+        // When the youtube-dl process exits
         void ytdlExitHandler(object sender, EventArgs e)
         {
             BeginInvoke(new MethodInvoker(() =>
@@ -201,7 +207,7 @@ namespace YoutubeDlWrapper
             }
         }
 
-        // Open the Videos\From YouTube folder
+        // Open the 'Videos\From YouTube' folder
         private void btnFolder_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", _folderPath);
@@ -222,7 +228,7 @@ namespace YoutubeDlWrapper
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { /* nothing to do here */ }
         }
     }
 }
