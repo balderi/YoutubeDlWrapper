@@ -141,6 +141,15 @@ namespace YoutubeDlWrapper
             BeginInvoke(new MethodInvoker(() =>
             {
                 tbOutput.Text = string.IsNullOrWhiteSpace(e.Data) ? tbOutput.Text : e.Data;
+                if(tbOutput.Text.Contains("[download]"))
+                {
+                    string wat = Regex.Match(tbOutput.Text, "[0-9]{3}|[0-9]{2}").Value;
+                    int.TryParse(wat, out int lol);
+                    pBar.Style = ProgressBarStyle.Continuous;
+                    if (lol > 100)
+                        lol = 100;
+                    pBar.Value = lol;
+                }
             }));
         }
 
@@ -168,6 +177,10 @@ namespace YoutubeDlWrapper
         {
             lblFormat.Visible = cbAudio.Checked;
             cbFormat.Visible = cbAudio.Checked;
+            if(cbFormat.SelectedIndex < 0)
+            {
+                cbFormat.SelectedIndex = 1;
+            }
         }
 
         void DisableControls()
@@ -192,7 +205,7 @@ namespace YoutubeDlWrapper
         private void pbLogo_Click(object sender, EventArgs e)
         {
             AboutBox about = new AboutBox();
-            about.ShowDialog(this);
+            _ = about.ShowDialog(this);
         }
 
         // Enable controls once youtube-dl updating has finished
@@ -217,6 +230,16 @@ namespace YoutubeDlWrapper
         {
             try
             {
+                Stream msgStream = webClient.OpenRead("http://www.runedal.dk/test.txt");
+                StreamReader msgReader = new StreamReader(msgStream);
+                string[] content = msgReader.ReadToEnd().Replace(Environment.NewLine, "\n").Split('\n');
+                if (content[0] == "1")
+                    MessageBox.Show(content[1], "YouTube Download - Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex) { /* nothing to do here */ _ = ex; }
+
+            try
+            {
                 Stream versionStream = webClient.OpenRead("https://raw.githubusercontent.com/balderi/YoutubeDlWrapper/master/YoutubeDlWrapper/version.txt");
                 StreamReader versionReader = new StreamReader(versionStream);
                 string version = versionReader.ReadToEnd();
@@ -228,7 +251,7 @@ namespace YoutubeDlWrapper
                     }
                 }
             }
-            catch (Exception ex) { /* nothing to do here */ }
+            catch (Exception ex) { /* nothing to do here */ _ = ex; }
         }
     }
 }
